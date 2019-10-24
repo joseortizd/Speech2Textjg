@@ -18,3 +18,5 @@ npm test
 ```
 npm start
 ```
+6. Para probar el servicio utilizar algún cliente REST, creando una petición POST, acá la documentación del endpoint:
+[Documentación](https://speech2textjg.docs.apiary.io/). 
