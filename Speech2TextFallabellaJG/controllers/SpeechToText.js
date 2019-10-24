@@ -1,25 +1,14 @@
 'use strict';
-
-// [START speech_quickstart]
 async function parseSpeechToText(req, res, next) {
-    // Imports the Google Cloud client library
-    const speech = require('@google-cloud/speech');
-  //  const fs = require('fs');
-    // Creates a client
-    const client = new speech.SpeechClient();
-
-    // The name of the audio file to transcribe
- //   const fileName = '../public/audios/001.wav';
-
-    // Reads a local audio file and converts it to base64
-   // const file = fs.readFileSync(fileName);
-    if (!req.body[0].audio) {
+    if (Object.keys(req.body).length === 0 || !req.body[0].audio ) {
         res.status(400).json({
             status: 'Bad Request',
             response: 'Solicitud incompleta'
         });
         return false;
     } else {
+        const speech = require('@google-cloud/speech');
+        const client = new speech.SpeechClient();
         const audio = {
             content: req.body[0].audio,
         };
