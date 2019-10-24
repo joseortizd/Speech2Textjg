@@ -19,4 +19,8 @@ npm test
 npm start
 ```
 6. Para probar el servicio utilizar algún cliente REST, creando una petición POST, acá la documentación del endpoint:
-[Documentación](https://speech2textjg.docs.apiary.io/). 
+[Documentación](https://speech2textjg.docs.apiary.io/).
+
+## Extra
+De acuerdo a lo solicitado el proyecto se encuentra ejecutándose en GCP a través de APP Engine. La URL pública es la siguiente: https://speech2textjg-1571871521725.appspot.com/
+ 
