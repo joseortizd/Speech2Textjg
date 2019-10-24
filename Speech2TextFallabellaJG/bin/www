@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Module dependencies.
+ * Dependencias del módulo.
  */
 
 var app = require('../app');
@@ -9,28 +9,25 @@ var debug = require('debug')('speech2textfallabellajg:server');
 var http = require('http');
 
 /**
- * Get port from environment and store in Express.
+ * Se obtiene el puerto donde se este ejecutando la aplicación
  */
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Se crea un servidor http.
  */
 
 var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
 
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
 /**
- * Normalize a port into a number, string, or false.
+ * Se comprueba la validez del puerto devuelto por el ambiente
  */
 
 function normalizePort(val) {
@@ -50,7 +47,7 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Listener para cualquier error en el servidor http.
  */
 
 function onError(error) {
@@ -78,7 +75,7 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Listener para la ejecución en el puerto proporcionado por el ambiente, o el indicado en la aplicación.
  */
 
 function onListening() {

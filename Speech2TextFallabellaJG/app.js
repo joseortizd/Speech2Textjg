@@ -8,9 +8,11 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 
 var app = express();
+// Se configura un tamaño mayor para los JSON debido a que los base64 pueden ser
+// Mas grandes que una solicitud normal
 app.use(bodyParser.json({limit: '10mb', extended: true}))
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
-// view engine setup
+// Se configura el motor de vistas Jade
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -21,16 +23,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json({limit: '100mb'}));
 app.use(bodyParser.urlencoded({limit: '1000mb', extended: true}));
+// Se incluye el index router que contiene las URL expuestas desde la API
 app.use('/', indexRouter);
 
-// catch 404 and forward to error handler
+// Se capturan los errores 404, y se envian a su manejador
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  // Solo mostrar los mensajes de error en ambiente de desarrollo
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
