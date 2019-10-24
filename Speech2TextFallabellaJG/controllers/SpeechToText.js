@@ -1,9 +1,10 @@
 'use strict';
+let validator = require('validator');
 
 /* Funcionalidad principal de la aplicación, recibe un audio base 64 y lo devuelve como texto. */
 async function parseSpeechToText(req, res, next) {
     /* Se verifica que la petición no venga vacía, además que la propiedad audio esté definida. */
-    if (Object.keys(req.body).length === 0 || !req.body[0].audio ) {
+    if (Object.keys(req.body).length === 0 || !req.body.audio || !validator.isBase64(req.body.audio)) {
         /* En caso que exista algún error en la petición se retorna error 400. */
         res.status(400).json({
             status: 'Bad Request',
@@ -16,14 +17,14 @@ async function parseSpeechToText(req, res, next) {
         const client = new speech.SpeechClient();
         /* El audio de la petición se guarda en la variable audio, para ser enviada posteriormente. */
         const audio = {
-            content: req.body[0].audio,
+            content: req.body.audio,
         };
         /* Se configura el idioma, la cantidad de canales (por si el audio es stereo) asi como el
         reconocimiento de cada canal. */
         const config = {
             languageCode: 'es-ES',
-            audioChannelCount: 2,
-            enableSeparateRecognitionPerChannel: true
+            audioChannelCount: 1,
+            enableSeparateRecognitionPerChannel: false
         };
         /* Se configura la solicitud a ser realizada. */
         const request = {
@@ -31,7 +32,12 @@ async function parseSpeechToText(req, res, next) {
             config: config,
         };
         /* Se utiliza la función recognize del cliente speech. */
-        const [response] = await client.recognize(request);
+        const [response] = await client.recognize(request).catch(error => {
+            res.status(500).json({
+                status: 'Internal Server Error',
+                response: error.toString()
+            })
+        });
         /* Se retorna la respuesta. */
         res.status(200).json({
             status: 'OK',
@@ -42,14 +48,13 @@ async function parseSpeechToText(req, res, next) {
 /* Este método se usa por si la aplicación detecto mas de una transcripción para un mismo audio. */
 function returnResponse(results) {
     let response = [];
-    results.forEach((a) => {
+    results.forEach((transcripcion) => {
         response.push(
             {
-                'Posible Texto' : a.alternatives[0].transcript
+                'Transcripcion' : transcripcion.alternatives[0].transcript
             });
     });
-    /* Se retorna un arreglo filtrando los resultados que sean idénticos en la respuesta de la aplicación */
-    return Array.from(new Set(response.map(JSON.stringify))).map(JSON.parse);
+    return response;
 }
 
 module.exports ={

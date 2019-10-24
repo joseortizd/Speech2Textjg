@@ -15,7 +15,7 @@ describe('POST /v1/parse', function () {
                 if (err) return done(err);
                 done();
             });
-    }, 15000);
+    }, 0);
 });
 
 describe('POST /v1/parse', function () {
@@ -33,5 +33,5 @@ describe('POST /v1/parse', function () {
                 if (err) return done(err);
                 done();
             });
-    }, 15000);
+    }, 0);
 });
