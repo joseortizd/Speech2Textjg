@@ -10,7 +10,7 @@ cd Speech2Textjg/Speech2TextFallabellaJG/
 npm i
 ```
 3. Antes de ejecutar el proyecto se debe incluir dentro de la ruta `Speech2TextFallabellaJG/public/jsons` el archivo de nombre **speech2textjg-1571871521725-9a51691f15f4.json** El cual va adjunto en el correo de entrega de la asignación y no fue incluido en el código fuente por motivos de seguridad y que Google los bloquea al detectarlos en repositorios públicos.
-4. Ejecutar pruebas antes de ejecutar el proyecto para verificar su correcta instalción y que no tenga problemas de ejecución. 
+4. Correr pruebas antes de ejecutar el proyecto para verificar su correcta instalación y que no tenga problemas de ejecución. 
 ```
 npm test
 ```
