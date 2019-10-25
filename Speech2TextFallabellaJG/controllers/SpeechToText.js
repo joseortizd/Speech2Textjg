@@ -1,9 +1,8 @@
 'use strict';
 let validator = require('validator');
-
 /* Funcionalidad principal de la aplicación, recibe un audio base 64 y lo devuelve como texto. */
 async function parseSpeechToText(req, res, next) {
-    /* Se verifica que la petición no venga vacía, además que la propiedad audio esté definida. */
+    /* Se verifica que la petición no venga vacía, que sea base64 válido,además que la propiedad audio esté definida. */
     if (Object.keys(req.body).length === 0 || !req.body.audio || !validator.isBase64(req.body.audio)) {
         /* En caso que exista algún error en la petición se retorna error 400. */
         res.status(400).json({
@@ -23,7 +22,7 @@ async function parseSpeechToText(req, res, next) {
         reconocimiento de cada canal. */
         const config = {
             languageCode: 'es-ES',
-            audioChannelCount: 1,
+            audioChannelCount: 2,
             enableSeparateRecognitionPerChannel: false
         };
         /* Se configura la solicitud a ser realizada. */
